@@ -1,95 +1,121 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Your India Live</title>
-
     <style>
+        * {
+            box-sizing: border-box;
+        }
 
         body {
-
             margin: 0;
-
             font-family: Arial, sans-serif;
-
             background: #f4f6f9;
-
             color: #222;
-
         }
 
         header {
-
             background: #111827;
-
             color: white;
-
-            padding: 25px;
-
             text-align: center;
+            padding: 30px 15px;
+        }
 
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        header p {
+            margin-bottom: 0;
+        }
+
+        nav {
+            background: #1f2937;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
         }
 
         main {
-
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
             text-align: center;
+        }
 
-            padding: 60px 20px;
-
+        .welcome {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000010;
         }
 
         h2 {
-
             color: #2563eb;
+        }
 
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 15px;
         }
 
         footer {
-
             background: #111827;
-
             color: white;
-
             text-align: center;
-
-            padding: 15px;
-
+            padding: 20px;
+            margin-top: 50px;
         }
-
     </style>
-
 </head>
 
 <body>
 
     <header>
-
         <h1>Your India Live</h1>
-
-        <p>Welcome to Your India Live</p>
-
+        <p>Your India, Your Updates</p>
     </header>
 
-    <main>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
-        <h2>India Live Updates</h2>
+    <main id="home">
+        <section class="welcome">
+            <h2>Welcome to Your India Live</h2>
+            <p>Your platform for news, updates and information from India.</p>
+            <a href="#about" class="button">Explore More</a>
+        </section>
 
-        <p>Your platform for news, updates and information.</p>
+        <section id="about">
+            <h2>About Us</h2>
+            <p>Your India Live brings information and updates together in one place.</p>
+        </section>
 
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Stay connected with Your India Live.</p>
+        </section>
     </main>
 
     <footer>
-
-        <p>© 2026 Your India Live</p>
-
+        <p>© 2026 Your India Live. All rights reserved.</p>
     </footer>
 
 </body>
-
 </html>
