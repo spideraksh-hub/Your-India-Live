@@ -1,9 +1,160 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Test Site</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Your India Live</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #080d24, #142b50, #050816);
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.container {
+    padding: 25px;
+    animation: appear 1.5s ease;
+}
+
+h1 {
+    font-size: clamp(38px, 9vw, 75px);
+    font-weight: 900;
+    background: linear-gradient(90deg, #ff9933, white, #138808);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: glow 2s infinite alternate;
+}
+
+.subtitle {
+    margin-top: 18px;
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: #dce7ff;
+    animation: slide 2s ease;
+}
+
+button {
+    margin-top: 40px;
+    padding: 16px 38px;
+    border: none;
+    border-radius: 40px;
+    background: linear-gradient(90deg, #ff9933, #138808);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 25px #ff993366;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.12);
+    box-shadow: 0 0 35px #ffffff88;
+}
+
+.particle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: white;
+    border-radius: 50%;
+    animation: float 5s infinite ease-in-out;
+}
+
+@keyframes glow {
+    from {
+        filter: drop-shadow(0 0 5px #ff9933);
+    }
+    to {
+        filter: drop-shadow(0 0 25px #138808);
+    }
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slide {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateY(-100px);
+        opacity: 1;
+    }
+}
+</style>
 </head>
+
 <body>
-    <h1>Hello World</h1>
+
+<div class="container">
+
+    <h1>YOUR INDIA LIVE</h1>
+
+    <p class="subtitle">
+        HOUSES • MONUMENTS • EXPLORE
+    </p>
+
+    <button onclick="enterWebsite()">
+        ENTER WEBSITE →
+    </button>
+
+</div>
+
+<script>
+
+for (let i = 0; i < 35; i++) {
+    let particle = document.createElement("div");
+
+    particle.className = "particle";
+    particle.style.left = Math.random() * 100 + "%";
+    particle.style.top = Math.random() * 100 + "%";
+    particle.style.animationDelay = Math.random() * 5 + "s";
+
+    document.body.appendChild(particle);
+}
+
+function enterWebsite() {
+    alert("Welcome to Your India Live!");
+}
+
+</script>
+
 </body>
 </html>
