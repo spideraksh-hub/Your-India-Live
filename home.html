@@ -49,14 +49,46 @@ header p {
     color: #d9e9ff;
 }
 
-.map-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: min(90vw, 440px);
-    animation: mapGlow 3s infinite alternate;
+<div class="taj-pin" onclick="showTajMahal()">
+    🌸
+</div>
+
+<div id="taj-info" class="info-panel">
+    <h2>Taj Mahal</h2>
+    <p>Agra, Uttar Pradesh, India</p>
+    <p>One of the most beautiful monuments in India.</p>
+</div>
+
+<script>
+function showTajMahal() {
+    document.getElementById("taj-info").style.display = "block";
 }
+</script>
+
+<style>
+.taj-pin {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+.info-panel {
+    display: none;
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 15px;
+    width: 85%;
+    max-width: 300px;
+    text-align: center;
+}
+</style>
 
 .map-container svg {
     width: 100%;
