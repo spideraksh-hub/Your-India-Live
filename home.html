@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Your India Live - Home</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(145deg, #07152e, #102e50, #07152e);
+    color: white;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+header {
+    text-align: center;
+    padding: 35px 10px;
+    position: relative;
+    z-index: 2;
+}
+
+header h1 {
+    font-size: clamp(32px, 7vw, 65px);
+    font-weight: 900;
+    background: linear-gradient(
+        90deg, #ff9933, white, #138808
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 25px #ffffff22;
+    letter-spacing: 2px;
+}
+
+header p {
+    margin-top: 12px;
+    letter-spacing: 4px;
+    font-size: 13px;
+    color: #d9e9ff;
+}
+
+.map-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(90vw, 440px);
+    animation: mapGlow 3s infinite alternate;
+}
+
+.map-container svg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 25px #ff993388);
+}
+
+.map-outline {
+    fill: url(#indiaGradient);
+    stroke: white;
+    stroke-width: 2;
+    stroke-linejoin: round;
+}
+
+.map-text {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 23px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    color: white;
+    text-shadow: 0 0 15px #000;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 35px;
+    width: 100%;
+    text-align: center;
+    padding: 0 25px;
+}
+
+.loading-text {
+    font-size: 13px;
+    letter-spacing: 3px;
+    margin-bottom: 13px;
+    color: #ffffff;
+}
+
+.loading-bar {
+    width: 100%;
+    max-width: 350px;
+    height: 8px;
+    background: #ffffff33;
+    border-radius: 20px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.loading-progress {
+    width: 0%;
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(
+        90deg, #ff9933, white, #138808
+    );
+    animation: loading 5s ease-in-out infinite;
+}
+
+@keyframes loading {
+    0% { width: 0%; }
+    80% { width: 100%; }
+    100% { width: 100%; }
+}
+
+@keyframes mapGlow {
+    from {
+        filter: drop-shadow(0 0 5px #ff9933);
+    }
+    to {
+        filter: drop-shadow(0 0 30px #138808);
+    }
+}
+
+footer {
+    margin-top: 15px;
+    font-size: 11px;
+    color: #a9c1dc;
+    letter-spacing: 2px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>YOUR INDIA LIVE</h1>
+    <p>DISCOVER THE BEAUTY OF INDIA</p>
+</header>
+
+<div class="map-container">
+
+<svg viewBox="0 0 400 480"
+     xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+    <linearGradient id="indiaGradient"
+        x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ff9933"/>
+        <stop offset="50%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#138808"/>
+    </linearGradient>
+</defs>
+
+<!-- Stylized India map silhouette -->
+<path class="map-outline" d="
+M135 12
+L160 25 181 20 194 37
+214 42 222 61 245 65
+253 85 278 89 288 108
+309 115 301 135 321 151
+312 170 330 186 315 207
+320 225 300 240 304 258
+287 274 281 297 265 311
+255 337 244 355 229 384
+215 418 201 450 188 430
+177 403 163 379 152 355
+139 335 125 319 108 304
+96 281 81 265 85 245
+66 226 73 207 57 188
+70 167 62 149 80 130
+75 111 96 96 102 76
+119 62 114 43 132 34
+Z"/>
+
+</svg>
+
+<div class="map-text">INDIA</div>
+
+</div>
+
+<div class="bottom">
+
+    <div class="loading-text">
+        EXPLORE INCREDIBLE INDIA...
+    </div>
+
+    <div class="loading-bar">
+        <div class="loading-progress"></div>
+    </div>
+
+    <footer>
+        HOUSES • MONUMENTS • EXPLORE
+    </footer>
+
+</div>
+
+</body>
+</html>
