@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YOUR INDIA LIVE</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#071525;color:white}
+header{padding:22px;text-align:center;background:#06101e;border-bottom:2px solid #00c8ff}
+header h1{color:#20d8ff;letter-spacing:3px}
+header p{color:#aaa;margin-top:8px}
+.container{max-width:1000px;margin:auto;padding:18px}
+.card{background:#102b40;padding:22px;border-radius:16px;margin:16px 0;border:1px solid #24536d}
+h2{color:#21d4fd;margin-bottom:17px}
+h3{margin-bottom:8px}
+input,select{width:100%;padding:14px;margin:7px 0;border-radius:9px;background:#071b2c;color:white;border:1px solid #34718b}
+button{padding:12px 17px;border:0;border-radius:9px;background:linear-gradient(90deg,#00b4db,#007ba8);color:white;font-weight:bold;cursor:pointer;margin:5px}
+button:hover{filter:brightness(1.2)}
+.secondary{background:#334b60}
+.menu{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.menu button{min-height:65px;font-size:15px}
+#dashboard,#game,#monuments,#house,#friends,#market,#settings,#missions,#photo{display:none}
+.hero{padding:35px 15px;text-align:center;background:linear-gradient(135deg,#123f60,#087d91);border-radius:15px;margin-bottom:20px}
+.hero h2{font-size:30px;color:white}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.item{background:#173c53;border-radius:12px;overflow:hidden;padding:12px}
+.item img{width:100%;height:145px;object-fit:cover;border-radius:9px}
+.item h3{margin-top:10px;color:#4be0ff}
+.item p{font-size:13px;color:#ccc;margin:7px 0}
+#world{height:320px;border-radius:14px;overflow:hidden;position:relative;background:linear-gradient(#72c8ee 0%,#d5f0ef 55%,#4baf54 56%,#1b6735 100%)}
+.houseVisual{position:absolute;bottom:60px;left:38%;width:120px;height:100px;background:#d8a36c}
+.roof{position:absolute;top:-50px;left:-12px;width:0;height:0;border-left:72px solid transparent;border-right:72px solid transparent;border-bottom:52px solid #873b2d}
+#avatar{position:absolute;bottom:55px;left:48%;font-size:40px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#006c86;padding:13px 20px;border-radius:10px;display:none;z-index:10}
+footer{text-align:center;color:#8ba4b6;padding:25px}
+@media(max-width:450px){.grid{grid-template-columns:1fr 1fr}.item img{height:110px}.hero h2{font-size:23px}}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🇮🇳 YOUR INDIA LIVE</h1>
+<p>YOUR WORLD. YOUR LIFE. YOUR INDIA.</p>
+</header>
+
+<div class="container">
+
+<!-- LOGIN -->
+<section id="auth" class="card">
+<h2>Welcome to Your India Live</h2>
+<p>Create your account or login.</p>
+<input id="username" placeholder="Enter username">
+<input id="password" type="password" placeholder="Enter password">
+<button onclick="login()">LOGIN / SIGN UP</button>
+<p id="message"></p>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard">
+<div class="hero">
+<h2>Welcome, <span id="welcome"></span>!</h2>
+<p>Explore your own virtual India.</p>
+</div>
+
+<div class="card">
+<h2>👤 PLAYER PROFILE</h2>
+<p>Username: <b id="playerName"></b></p>
+<p>Unique ID: <b id="playerID"></b></p>
+<p>Coins: <b id="coins">100</b> 🪙</p>
+<p>Level: <b id="level">1</b></p>
+<button onclick="logout()">LOGOUT</button>
+</div>
+
+<div class="card">
+<h2>🌍 MAIN MENU</h2>
+<div class="menu">
+<button onclick="showPage('game')">🌍 Virtual World</button>
+<button onclick="showPage('house')">🏠 Build House</button>
+<button onclick="showPage('monuments')">🏰 Monuments</button>
+<button onclick="showPage('friends')">👥 Multiplayer / Friends</button>
+<button onclick="showPage('market')">🛒 Market</button>
+<button onclick="showPage('missions')">🏆 Missions</button>
+<button onclick="showPage('photo')">📸 Photo Mode</button>
+<button onclick="showPage('settings')">⚙️ Settings</button>
+</div>
+</div>
+</section>
+
+<!-- VIRTUAL WORLD -->
+<section id="game" class="card">
+<h2>🌍 YOUR VIRTUAL WORLD</h2>
+<div id="world">
+<div class="houseVisual" id="worldHouse"><div class="roof"></div></div>
+<div id="avatar">🧍</div>
+</div>
+<p style="margin-top:15px">Welcome to your virtual world!</p>
+<button onclick="movePlayer(-25)">⬅️ LEFT</button>
+<button onclick="movePlayer(25)">RIGHT ➡️</button>
+<button onclick="showPage('house')">BUILD HOUSE</button>
+<button class="secondary" onclick="home()">BACK HOME</button>
+</section>
+
+<!-- HOUSE BUILDING -->
+<section id="house" class="card">
+<h2>🏠 HOUSE BUILDING</h2>
+<p>Customize your virtual home.</p>
+<button onclick="changeHouse('#d8a36c')">🟤 Brown House</button>
+<button onclick="changeHouse('#e8e8e8')">⬜ White House</button>
+<button onclick="changeHouse('#db5757')">🟥 Red House</button>
+<button onclick="changeHouse('#8c65d9')">🟣 Purple House</button>
+<p id="houseMessage">Choose your house color!</p>
+<button class="secondary" onclick="home()">BACK HOME</button>
+</section>
+
+<!-- MONUMENTS -->
+<section id="monuments" class="card">
+<h2>🏰 EXPLORE INDIAN MONUMENTS</h2>
+<p>Explore the famous heritage of India.</p>
+<select id="stateFilter" onchange="filterMonuments()">
+<option value="all">All States</option>
+<option value="Uttar Pradesh">Uttar Pradesh</option>
+<option value="Delhi">Delhi</option>
+<option value="Rajasthan">Rajasthan</option>
+<option value="Maharashtra">Maharashtra</option>
+<option value="Karnataka">Karnataka</option>
+<option value="Tamil Nadu">Tamil Nadu</option>
+<option value="Jammu and Kashmir">Jammu and Kashmir</option>
+</select>
+<div class="grid" id="monumentGrid"></div>
+<button class="secondary" onclick="home()">BACK HOME</button>
+</section>
+
+<!-- FRIENDS / MULTIPLAYER -->
+<section id="friends" class="card">
+<h2>👥 FRIENDS & MULTIPLAYER</h2>
+<p>Your Player ID: <b id="friendID"></b></p>
+<input id="friendInput" placeholder="Enter friend's Player ID">
+<button onclick="addFriend()">ADD FRIEND</button>
+<h3 style="margin-top:20px">Your Friends</h3>
+<div id="friendList">No friends added yet.</div>
+<p style="margin-top:15px;color:#ffc56b">Online multiplayer requires a shared backend and is not active yet.</p>
+<button class="secondary" onclick="home()">BACK HOME</button>
+</section>
+
+<!-- MARKET -->
+<section id="market" class="card">
+<h2>🛒 VIRTUAL MARKET</h2>
+<p>Buy items using virtual coins.</p>
+<div class="grid">
+<div class="item"><h3>🏡 Big House</h3><p>Cost: 50 coins</p><button onclick="buyItem(50,'Big House')">BUY</button></div>
+<div class="item"><h3>🚗 Car</h3><p>Cost: 30 coins</p><button onclick="buyItem(30,'Car')">BUY</button></div>
+<div class="item"><h3>🏍️ Bike</h3><p>Cost: 20 coins</p><button onclick="buyItem(20,'Bike')">BUY</button></div>
+<div class="item"><h3>👑 Crown</h3><p>Cost: 40 coins</p><button onclick="buyItem(40,'Crown')">BUY</button></div>
+</div>
+<button class="secondary" onclick="home()">BACK HOME</button>
+</section>
+
+<!-- MISSIONS -->
+<section id="missions" class="card">
+<h2>🏆 MISSIONS & REWARDS</h2>
+<p>Explore monuments and earn coins!</p>
+<div id="missionList"></div>
+<button class="secondary" onclick="home()">BACK HOME</button>
+</section>
+
+<!-- PHOTO MODE -->
+<section id="photo" class="card">
+<h2>📸 PHOTO MODE</h2>
+<p>Take a screenshot of your virtual world or monument.</p>
+<div id="photoPreview" style="background:#19475d;padding:35px;text-align:center;border-radius:12px">
+<h2>🇮🇳 YOUR INDIA LIVE</h2>
+<div style="font-size:55px">🧍 🏰</div>
+<p id="photoName"></p>
+</div>
+<button onclick="window.print()">SAVE / PRINT PHOTO</button>
+<button class="secondary" onclick="home()">BACK HOME</button>
+</section>
+
+<!-- SETTINGS -->
+<section id="settings" class="card">
+<h2>⚙️ SETTINGS</h2>
+<p>Player: <b id="settingsName"></b></p>
+<button onclick="toggleSound()">🔊 Toggle Sound</button>
+<button onclick="logout()">LOGOUT</button>
+<button class="secondary" onclick="home()">BACK HOME</button>
+</section>
+
+</div>
+
+<footer>© 2026 YOUR INDIA LIVE | Made in India 🇮🇳</footer>
+<div id="toast"></div>
+
+<script>
+const monuments=[
+{name:"Taj Mahal",state:"Uttar Pradesh",city:"Agra",emoji:"🕌",image:"https://images.unsplash.com/photo-1564507592333-c60657eea523?w=600",desc:"The famous white marble monument of love."},
+{name:"Red Fort",state:"Delhi",city:"Delhi",emoji:"🏰",image:"https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600",desc:"Historic Mughal fort in Delhi."},
+{name:"India Gate",state:"Delhi",city:"Delhi",emoji:"🏛️",image:"https://images.unsplash.com/photo-1597040663342-45b6af3d91a6?w=600",desc:"National war memorial in New Delhi."},
+{name:"Qutub Minar",state:"Delhi",city:"Delhi",emoji:"🗼",image:"https://images.unsplash.com/photo-1606293926075-69a00dbfde81?w=600",desc:"Historic tower and UNESCO heritage site."},
+{name:"Hawa Mahal",state:"Rajasthan",city:"Jaipur",emoji:"🏯",image:"https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?w=600",desc:"The Palace of Winds in Jaipur."},
+{name:"Gateway of India",state:"Maharashtra",city:"Mumbai",emoji:"🏛️",image:"https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600",desc:"Iconic waterfront monument in Mumbai."},
+{name:"Mysore Palace",state:"Karnataka",city:"Mysore",emoji:"👑",image:"https://images.unsplash.com/photo-1600100397608-f010ea6b8e9c?w=600",desc:"Royal palace of Mysore."},
+{name:"Brihadeeswara Temple",state:"Tamil Nadu",city:"Thanjavur",emoji:"🛕",image:"https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=600",desc:"Magnificent historic Chola temple."},
+{name:"Mubarak Mandi Palace",state:"Jammu and Kashmir",city:"Jammu",emoji:"🏯",image:"https://images.unsplash.com/photo-1605649487212-47bdab064df3?w=600",desc:"Historic palace complex in Jammu."},
+{name:"Amar Mahal Palace",state:"Jammu and Kashmir",city:"Jammu",emoji:"🏛️",image:"https://images.unsplash.com/photo-1595815771614-ade9d7f8d6c8?w=600",desc:"Beautiful heritage palace in Jammu."}
+];
+
+let current=null;
+let sound=true;
+let playerX=48;
+
+function getUsers(){return JSON.parse(localStorage.getItem('yil_users')||'{}')}
+function saveUsers(users){localStorage.setItem('yil_users',JSON.stringify(users))}
+function data(){return getUsers()[current]}
+function saveData(d){let u=getUsers();u[current]=d;saveUsers(u);updateProfile()}
+
+function login(){
+let name=document.getElementById('username').value.trim();
+let pass=document.getElementById('password').value;
+if(!name||!pass){message("Enter username and password");return}
+let users=getUsers();
+if(users[name]&&users[name].password!==pass){message("Incorrect password");return}
+if(!users[name]){
+users[name]={password:pass,id:"YIL"+Math.floor(100000+Math.random()*900000),coins:100,level:1,friends:[],completed:[],items:[]};
+}
+saveUsers(users);
+current=name;
+localStorage.setItem('yil_current',name);
+start();
+}
+function message(t){document.getElementById('message').innerText=t}
+function start(){
+document.getElementById('auth').style.display='none';
+document.getElementById('dashboard').style.display='block';
+document.getElementById('welcome').innerText=current;
+document.getElementById('playerName').innerText=current;
+document.getElementById('settingsName').innerText=current;
+document.getElementById('friendID').innerText=data().id;
+document.getElementById('photoName').innerText=current;
+updateProfile();
+renderMonuments();
+renderMissions();
+}
+function updateProfile(){
+let d=data();
+document.getElementById('playerID').innerText=d.id;
+document.getElementById('coins').innerText=d.coins;
+document.getElementById('level').innerText=d.level;
+}
+function logout(){
+localStorage.removeItem('yil_current');
+location.reload();
+}
+function showPage(id){
+['dashboard','game','house','monuments','friends','market','missions','photo','settings'].forEach(x=>document.getElementById(x).style.display='none');
+document.getElementById(id).style.display='block';
+}
+function home(){showPage('dashboard')}
+function movePlayer(n){
+playerX=Math.max(3,Math.min(90,playerX+n/5));
+document.getElementById('avatar').style.left=playerX+'%';
+}
+function changeHouse(c){
+document.getElementById('worldHouse').style.background=c;
+document.getElementById('houseMessage').innerText="House updated!";
+}
+function renderMonuments(){
+let grid=document.getElementById('monumentGrid');
+grid.innerHTML='';
+let filter=document.getElementById('stateFilter').value;
+monuments.filter(m=>filter==='all'||m.state===filter).forEach(m=>{
+let div=document.createElement('div');
+div.className='item';
+let img=document.createElement('img');
+img.src=m.image;img.alt=m.name;
+img.onerror=()=>{img.style.display='none'};
+let h=document.createElement('h3');h.innerText=m.emoji+' '+m.name;
+let p=document.createElement('p');p.innerText=m.city+', '+m.state+' — '+m.desc;
+let b=document.createElement('button');b.innerText='EXPLORE';
+b.onclick=()=>explore(m.name);
+div.append(img,h,p,b);grid.append(div);
+});
+}
+function filterMonuments(){renderMonuments()}
+function explore(name){
+let d=data();
+if(!d.completed.includes(name)){
+d.completed.push(name);
+d.coins+=20;d.level++;
+saveData(d);
+}
+notify("Explored "+name+"! +20 coins 🪙");
+renderMissions();
+showPage('monuments');
+}
+function renderMissions(){
+let list=document.getElementById('missionList');
+list.innerHTML='';
+monuments.forEach(m=>{
+let p=document.createElement('p');
+p.style.padding='9px';
+p.innerText=(data().completed.includes(m.name)?"✅ ":"🔒 ")+ "Explore "+m.name;
+list.append(p);
+});
+}
+function buyItem(cost,name){
+let d=data();
+if(d.coins<cost){notify("Not enough coins!");return}
+d.coins-=cost;d.items.push(name);
+saveData(d);notify(name+" purchased!");
+}
+function addFriend(){
+let id=document.getElementById('friendInput').value.trim();
+if(!id)return notify("Enter a Player ID");
+let d=data();
+if(id===d.id)return notify("You cannot add yourself");
+if(d.friends.includes(id))return notify("Already added");
+d.friends.push(id);saveData(d);renderFriends();
+}
+function renderFriends(){
+document.getElementById('friendList').innerText=data().friends.join(', ')||'No friends added yet.';
+}
+function toggleSound(){sound=!sound;notify("Sound "+(sound?"on":"off"))}
+function notify(t){
+let el=document.getElementById('toast');
+el.innerText=t;el.style.display='block';
+setTimeout(()=>el.style.display='none',2200);
+}
+document.getElementById('friends').addEventListener('click',renderFriends);
+window.onload=()=>{
+let name=localStorage.getItem('yil_current');
+if(name&&getUsers()[name]){current=name;start()}
+};
+</script>
+</body>
+</html>
