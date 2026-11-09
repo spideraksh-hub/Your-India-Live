@@ -3,591 +3,386 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>YOUR INDIA LIVE - Open World</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>YOUR INDIA LIVE</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;overflow:hidden;background:#080e19;
- font-family:Arial,sans-serif;color:white;
- touch-action:none;
-}
-#game{position:fixed;inset:0}
+body{margin:0;overflow:hidden;background:#101923;color:white;font-family:Arial}
 canvas{display:block}
-#top{
- position:fixed;top:12px;left:12px;right:12px;
- display:flex;justify-content:space-between;
- pointer-events:none;gap:8px;
-}
-.panel{
- background:#071827dc;border:1px solid #20cfff;
- padding:10px 13px;border-radius:12px;
- backdrop-filter:blur(8px);
-}
-#brand{font-weight:bold;color:#35dfff}
-#stats{font-size:12px;line-height:1.6}
-#map{
- position:fixed;top:85px;right:12px;
- width:150px;background:#071827e8;
- border:1px solid #2589a7;border-radius:12px;
- padding:10px;
-}
-#map button,.destination button{
- display:block;width:100%;margin:5px 0;
- padding:9px;border:0;border-radius:7px;
- background:#075b78;color:white;font-weight:bold;
-}
-#map button:active,#controls button:active{
- background:#13bde8;
-}
-#controls{
- position:fixed;bottom:22px;left:18px;
- display:grid;grid-template-columns:55px 55px 55px;
- grid-template-rows:55px 55px;
- gap:5px;
-}
-#controls button{
- border:1px solid #43cfff;
- border-radius:13px;
- background:#09283bcc;color:white;
- font-size:23px;
- touch-action:none;
-}
-#up{grid-column:2;grid-row:1}
-#left{grid-column:1;grid-row:2}
-#down{grid-column:2;grid-row:2}
-#right{grid-column:3;grid-row:2}
-#actions{
- position:fixed;bottom:35px;right:18px;
- display:flex;flex-direction:column;gap:10px;
-}
-#actions button{
- background:#075b78;color:white;
- border:1px solid #35dfff;
- border-radius:50%;width:65px;height:65px;
- font-weight:bold;
-}
-#message{
- position:fixed;top:45%;left:50%;
- transform:translate(-50%,-50%);
- background:#071827e8;padding:15px 22px;
- border-radius:12px;text-align:center;
- display:none;border:1px solid #35dfff;
-}
-#start{
- position:fixed;inset:0;background:#061525;
- display:flex;align-items:center;justify-content:center;
- z-index:10;text-align:center;padding:20px;
-}
-#start button{
- background:#04a9d1;border:0;padding:16px 35px;
- color:white;font-size:18px;border-radius:12px;
- font-weight:bold;
-}
-#loading{color:#75dfff;font-size:13px}
-#hint{
- position:fixed;bottom:8px;left:50%;
- transform:translateX(-50%);
- font-size:10px;color:#c4eaff;
- white-space:nowrap;
-}
+#hud{position:fixed;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;pointer-events:none}
+.panel{background:#071827e8;border:1px solid #26bde8;border-radius:12px;padding:10px}
+#brand{font-weight:bold;color:#36d9ff}
+#stats{font-size:12px;margin-top:5px}
+#menu{position:fixed;top:85px;right:10px;width:145px}
+button{border:1px solid #35cfff;background:#075574;color:white;padding:10px;border-radius:9px;font-weight:bold;cursor:pointer}
+#menu button{width:100%;margin-bottom:6px}
+#controls{position:fixed;bottom:18px;left:12px;display:grid;grid-template-columns:52px 52px 52px;gap:5px}
+#controls button{height:52px;font-size:20px;background:#062a42dd;touch-action:none}
+#up{grid-column:2}
+#left{grid-column:1}
+#down{grid-column:2}
+#right{grid-column:3}
+#actions{position:fixed;right:12px;bottom:20px;display:flex;flex-direction:column;gap:8px}
+#actions button{width:75px;height:55px}
+#store{position:fixed;inset:5%;background:#071827f5;border:1px solid #31cfff;border-radius:15px;padding:18px;overflow:auto;display:none;z-index:5}
+.item{border:1px solid #31576c;padding:12px;border-radius:10px;margin:10px 0}
+.item button{float:right}
+#close{float:right}
+#notice{position:fixed;top:45%;left:50%;transform:translate(-50%,-50%);background:#071827ed;border:1px solid #36d9ff;padding:15px;border-radius:12px;display:none;text-align:center;z-index:8}
+#start{position:fixed;inset:0;background:linear-gradient(#061525,#123d52);z-index:10;display:grid;place-items:center;text-align:center;padding:25px}
+#start button{font-size:18px;padding:15px 30px}
+#hint{position:fixed;bottom:4px;left:50%;transform:translateX(-50%);font-size:10px;white-space:nowrap;color:#d7efff}
 </style>
 </head>
-
 <body>
-<div id="game"></div>
-
 <div id="start">
  <div>
-  <h1 style="color:#27d9ff">🇮🇳 YOUR INDIA LIVE</h1>
+  <h1 style="color:#36d9ff">🇮🇳 YOUR INDIA LIVE</h1>
   <h2>3D FREE ROAM INDIA</h2>
-  <p>Explore India. Live your world.</p>
-  <p id="loading">Preparing 3D World...</p>
-  <button id="play" onclick="startGame()" disabled>ENTER WORLD</button>
+  <p>Explore • Drive • Ride • Discover</p>
+  <p id="loading">Loading 3D world...</p>
+  <button id="play" disabled>ENTER WORLD</button>
  </div>
 </div>
 
-<div id="top">
- <div class="panel">
-  <div id="brand">YOUR INDIA LIVE</div>
-  <div id="stats">Explorer | Level 1</div>
- </div>
+<div id="hud">
+ <div class="panel"><div id="brand">🇮🇳 YOUR INDIA LIVE</div><div id="stats">Explorer • On Foot</div></div>
  <div class="panel">🪙 <span id="coins">100</span></div>
 </div>
 
-<div id="map" class="destination">
- <b style="color:#40dcff">🗺️ INDIA MAP</b>
- <button onclick="travel('kashmir')">🏔️ Kashmir</button>
+<div id="menu">
+ <button onclick="openStore()">🛒 STORE</button>
  <button onclick="travel('delhi')">🏛️ Delhi</button>
  <button onclick="travel('agra')">🕌 Agra</button>
  <button onclick="travel('jaipur')">🏰 Jaipur</button>
+ <button onclick="travel('kashmir')">🏔️ Kashmir</button>
+ <button onclick="travel('mumbai')">🌆 Mumbai</button>
  <button onclick="travel('village')">🌳 Village</button>
 </div>
 
 <div id="controls">
- <button id="up">▲</button>
- <button id="left">◀</button>
- <button id="down">▼</button>
- <button id="right">▶</button>
+ <button id="up">▲</button><button id="left">◀</button>
+ <button id="down">▼</button><button id="right">▶</button>
 </div>
-
 <div id="actions">
+ <button id="enterVehicle">ENTER<br>VEHICLE</button>
  <button id="jump">JUMP</button>
  <button id="run">RUN</button>
 </div>
+<div id="hint">WASD / ARROWS TO MOVE • DRAG SCREEN TO TURN CAMERA</div>
+<div id="notice"></div>
 
-<div id="message"></div>
-<div id="hint">WASD / ARROWS TO MOVE • DRAG SCREEN TO ROTATE CAMERA</div>
+<div id="store">
+ <button id="close" onclick="closeStore()">CLOSE ✕</button>
+ <h2 style="color:#36d9ff">YOUR INDIA LIVE STORE</h2>
+ <p>Purchase items using UPI</p>
+ <div class="item">🏡 Luxury Mansion <b>₹19</b><p><button onclick="buy('Mansion',19)">BUY ₹19</button></p></div>
+ <div class="item">🏎️ Premium Sports Car <b>₹9</b><p><button onclick="buy('Premium Car',9)">BUY ₹9</button></p></div>
+ <div class="item">🏍️ Premium Bike <b>₹9</b><p><button onclick="buy('Premium Bike',9)">BUY ₹9</button></p></div>
+ <p>UPI ID: <b>pookie-aksh@fam</b></p>
+ <button onclick="copyUPI()">COPY UPI ID</button>
+ <p style="font-size:12px;color:#b9d9e8">After payment, keep your transaction ID. This demo cannot automatically verify payments or unlock purchases.</p>
+</div>
 
 <script type="module">
 import * as THREE from
 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
 const scene=new THREE.Scene();
-scene.background=new THREE.Color(0x91d5f0);
-scene.fog=new THREE.Fog(0x91d5f0,90,350);
+scene.background=new THREE.Color(0x91cce5);
+scene.fog=new THREE.Fog(0x91cce5,100,450);
 
-const camera=new THREE.PerspectiveCamera(
-65,innerWidth/innerHeight,0.1,1000
-);
-
+const camera=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,.1,1500);
 const renderer=new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(innerWidth,innerHeight);
 renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));
 renderer.shadowMap.enabled=true;
-renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 renderer.outputColorSpace=THREE.SRGBColorSpace;
-document.getElementById('game').appendChild(renderer.domElement);
+document.body.appendChild(renderer.domElement);
 
-scene.add(new THREE.HemisphereLight(0xffffff,0x526b39,2));
+scene.add(new THREE.HemisphereLight(0xffffff,0x557044,2));
+const sun=new THREE.DirectionalLight(0xffffff,2.2);
+sun.position.set(-80,120,60);sun.castShadow=true;
+sun.shadow.mapSize.set(1024,1024);scene.add(sun);
 
-const sun=new THREE.DirectionalLight(0xffffff,2.5);
-sun.position.set(-60,100,50);
-sun.castShadow=true;
-sun.shadow.mapSize.set(1024,1024);
-scene.add(sun);
+const material=c=>new THREE.MeshStandardMaterial({color:c,roughness:.85});
+const green=material(0x568b45),roadmat=material(0x34383c);
+const brown=material(0x80552f),leaf=material(0x286c37);
+const white=material(0xece6d8),red=material(0x9c4933);
 
-const mat=(color)=>new THREE.MeshStandardMaterial({
- color,roughness:0.9
-});
+function mesh(geo,mat,x,y,z,parent=scene){
+ const o=new THREE.Mesh(geo,mat);o.position.set(x,y,z);
+ o.castShadow=true;o.receiveShadow=true;parent.add(o);return o;
+}
 
-const grass=mat(0x438d43);
-const roadMat=mat(0x393d40);
-const stone=mat(0xd9c7a1);
-const white=mat(0xf1eee3);
-const red=mat(0x963e2c);
-const treeMat=mat(0x246a35);
-const trunkMat=mat(0x77502c);
-
-// Ground
-const ground=new THREE.Mesh(
- new THREE.PlaneGeometry(800,800),grass
-);
-ground.rotation.x=-Math.PI/2;
-ground.receiveShadow=true;
-scene.add(ground);
+// Large terrain
+mesh(new THREE.PlaneGeometry(1000,1000),green,0,-.15,0).rotation.x=-Math.PI/2;
 
 // Roads
 function road(x,z,w,d){
- const r=new THREE.Mesh(
-  new THREE.BoxGeometry(w,.15,d),roadMat
- );
- r.position.set(x,.08,z);
- scene.add(r);
+ mesh(new THREE.BoxGeometry(w,.12,d),roadmat,x,.02,z);
 }
-road(0,0,12,650);
-road(0,0,650,12);
-road(-100,-100,10,180);
-road(100,100,10,180);
+road(0,0,15,850);road(0,0,850,15);
+road(-120,0,10,400);road(120,0,10,400);
+road(0,-150,350,9);road(0,150,350,9);
 
-// Trees
+// Trees and buildings
 function tree(x,z,s=1){
- const g=new THREE.Group();
- const t=new THREE.Mesh(
-  new THREE.CylinderGeometry(.3*s,.45*s,3*s,8),trunkMat
- );
- t.position.y=1.5*s;
- g.add(t);
- const leaves=new THREE.Mesh(
-  new THREE.ConeGeometry(2*s,5*s,8),treeMat
- );
- leaves.position.y=4*s;
- g.add(leaves);
+ const g=new THREE.Group();scene.add(g);
+ mesh(new THREE.CylinderGeometry(.25*s,.4*s,3*s,8),brown,0,1.5*s,0,g);
+ mesh(new THREE.ConeGeometry(2*s,5*s,8),leaf,0,4*s,0,g);
  g.position.set(x,0,z);
- g.traverse(o=>{if(o.isMesh)o.castShadow=true});
- scene.add(g);
+}
+function building(x,z,w,h,d,color){
+ mesh(new THREE.BoxGeometry(w,h,d),material(color),x,h/2,z);
+}
+for(let i=0;i<250;i++){
+ let x=(Math.random()-.5)*750,z=(Math.random()-.5)*750;
+ if(Math.abs(x)<20||Math.abs(z)<20)continue;
+ tree(x,z,.6+Math.random());
+}
+for(let i=0;i<65;i++){
+ let x=(Math.random()-.5)*240,z=(Math.random()-.5)*240;
+ if(Math.abs(x)<22||Math.abs(z)<22)continue;
+ building(x,z,8,5+Math.random()*18,9,
+ [0xd4b18b,0xc4c7c9,0xb8795b,0xe0c89d][i%4]);
 }
 
-// Random forest
-for(let i=0;i<180;i++){
- const x=(Math.random()-.5)*500;
- const z=(Math.random()-.5)*500;
- if(Math.abs(x)<14||Math.abs(z)<14)continue;
- tree(x,z,.7+Math.random()*.8);
+// Mountain ranges
+for(let i=0;i<50;i++){
+ const h=25+Math.random()*65;
+ mesh(new THREE.ConeGeometry(15+Math.random()*20,h,7),
+ material(0x718b99),-300+Math.random()*600,h/2-2,-300+Math.random()*600);
 }
 
-// Buildings
-function building(x,z,color=0xc8b18a,w=9,h=12,d=9){
- const b=new THREE.Mesh(
-  new THREE.BoxGeometry(w,h,d),mat(color)
- );
- b.position.set(x,h/2,z);
- b.castShadow=true;
- b.receiveShadow=true;
- scene.add(b);
-}
-
-// Indian town
-for(let i=0;i<32;i++){
- const x=(Math.random()-.5)*130;
- const z=(Math.random()-.5)*130;
- if(Math.abs(x)<13||Math.abs(z)<13)continue;
- building(x,z,[0xe1c39a,0xd5b08a,0xc3c7c9,0xd89d72][i%4],
-  7,5+Math.random()*12,8);
-}
-
-// Mountains
-function mountain(x,z,r,h,color=0x708b92){
- const m=new THREE.Mesh(
-  new THREE.ConeGeometry(r,h,7),mat(color)
- );
- m.position.set(x,h/2-2,z);
- m.castShadow=true;
- scene.add(m);
-}
-for(let i=0;i<35;i++){
- mountain(-190+Math.random()*90,
- -220+Math.random()*420,
- 15+Math.random()*18,
- 30+Math.random()*55,
- 0x8297a3);
-}
-
-// Taj Mahal model
+// Monument models
 function taj(x,z){
- const g=new THREE.Group();
- function box(w,h,d,y,color){
-  const m=new THREE.Mesh(
-   new THREE.BoxGeometry(w,h,d),mat(color)
-  );
-  m.position.y=y;m.castShadow=true;
-  g.add(m);
- }
- box(18,9,14,4.5,0xf1e9d7);
- box(12,2,10,10,0xe7decd);
- function dome(xp,zp,r,h){
-  const m=new THREE.Mesh(
-   new THREE.SphereGeometry(r,20,16,0,Math.PI*2,0,Math.PI/2),
-   mat(0xf4eee1)
-  );
-  m.position.set(xp,11,zp);
-  m.scale.y=h/r;
-  g.add(m);
- }
- dome(0,0,6,7);
- for(let i of [-1,1]){
-  for(let j of [-1,1]){
-   const col=new THREE.Mesh(
-    new THREE.CylinderGeometry(.7,.9,16,12),white
-   );
-   col.position.set(i*12,8,j*10);
-   g.add(col);
-   const cap=new THREE.Mesh(
-    new THREE.ConeGeometry(1.3,3,12),white
-   );
-   cap.position.set(i*12,17,j*10);
-   g.add(cap);
-  }
+ const g=new THREE.Group();scene.add(g);
+ mesh(new THREE.BoxGeometry(22,10,18),white,0,5,0,g);
+ mesh(new THREE.BoxGeometry(14,2,12),white,0,11,0,g);
+ const dome=mesh(new THREE.SphereGeometry(7,24,16,0,Math.PI*2,0,Math.PI/2),white,0,12,0,g);
+ dome.scale.y=1.2;
+ for(let a of [-1,1])for(let b of [-1,1]){
+  mesh(new THREE.CylinderGeometry(.7,.9,17,12),white,a*14,8,b*11,g);
+  mesh(new THREE.ConeGeometry(1.3,3,12),white,a*14,18,b*11,g);
  }
  g.position.set(x,0,z);
- scene.add(g);
 }
-
-// Qutub Minar
-function tower(x,z){
- const g=new THREE.Group();
- const t=new THREE.Mesh(
-  new THREE.CylinderGeometry(1.1,2.2,25,16),red
- );
- t.position.y=12.5;g.add(t);
- for(let i=0;i<5;i++){
-  const ring=new THREE.Mesh(
-   new THREE.CylinderGeometry(2.3-i*.22,2.3-i*.22,.6,16),
-   stone
-  );
-  ring.position.y=4+i*4.5;g.add(ring);
- }
- g.position.set(x,0,z);scene.add(g);
-}
-
-// Red Fort
 function fort(x,z){
- const g=new THREE.Group();
- const wall=new THREE.Mesh(
-  new THREE.BoxGeometry(24,9,17),red
- );
- wall.position.y=4.5;g.add(wall);
- const gate=new THREE.Mesh(
-  new THREE.BoxGeometry(5,6,1),mat(0x44281e)
- );
- gate.position.set(0,3,9);g.add(gate);
- for(let i=-1;i<=1;i+=2){
-  const tower=new THREE.Mesh(
-   new THREE.BoxGeometry(5,13,5),mat(0xa74b32)
-  );
-  tower.position.set(i*13,6.5,0);g.add(tower);
+ const g=new THREE.Group();scene.add(g);
+ mesh(new THREE.BoxGeometry(28,10,20),red,0,5,0,g);
+ for(let a of [-1,1]){
+  mesh(new THREE.BoxGeometry(6,15,6),red,a*16,7.5,0,g);
  }
- g.position.set(x,0,z);scene.add(g);
+ mesh(new THREE.BoxGeometry(6,6,1),material(0x30251d),0,3,10,g);
+ g.position.set(x,0,z);
 }
-
-// Hawa Mahal
+function minar(x,z){
+ const g=new THREE.Group();scene.add(g);
+ mesh(new THREE.CylinderGeometry(1.5,3,27,18),red,0,13.5,0,g);
+ for(let i=0;i<5;i++)
+  mesh(new THREE.CylinderGeometry(3-i*.3,3-i*.3,.7,18),white,0,4+i*4.5,0,g);
+ g.position.set(x,0,z);
+}
 function hawa(x,z){
- const g=new THREE.Group();
- const body=new THREE.Mesh(
-  new THREE.BoxGeometry(20,18,5),mat(0xc77b58)
- );
- body.position.y=9;g.add(body);
- for(let y=0;y<5;y++){
-  for(let i=-3;i<=3;i++){
-   const win=new THREE.Mesh(
-    new THREE.BoxGeometry(1.3,2,0.3),mat(0x392c28)
-   );
-   win.position.set(i*2.5,3+y*3,2.7);
-   g.add(win);
-  }
- }
- g.position.set(x,0,z);scene.add(g);
+ const g=new THREE.Group();scene.add(g);
+ mesh(new THREE.BoxGeometry(23,18,6),material(0xc87955),0,9,0,g);
+ for(let y=0;y<5;y++)for(let x1=-3;x1<=3;x1++)
+  mesh(new THREE.BoxGeometry(1.3,2,.3),material(0x38251f),x1*2.7,3+y*3,3.1,g);
+ g.position.set(x,0,z);
 }
-
-// Landmarks
-taj(0,-95);
-fort(100,0);
-tower(-100,0);
-hawa(100,-100);
-
-// Landmark labels
-function label(text,x,z){
- const canvas=document.createElement('canvas');
- canvas.width=512;canvas.height=128;
- const c=canvas.getContext('2d');
- c.fillStyle='#09283a';
- c.fillRect(0,0,512,128);
- c.fillStyle='#ffffff';
- c.font='bold 42px Arial';
- c.textAlign='center';
- c.fillText(text,256,80);
- const tex=new THREE.CanvasTexture(canvas);
- const sprite=new THREE.Sprite(
-  new THREE.SpriteMaterial({map:tex,transparent:true})
- );
- sprite.position.set(x,22,z);
- sprite.scale.set(24,6,1);
- scene.add(sprite);
-}
-label('TAJ MAHAL - AGRA',0,-95);
-label('RED FORT - DELHI',100,0);
-label('QUTUB MINAR',-100,0);
-label('HAWA MAHAL - JAIPUR',100,-100);
+taj(0,-110);fort(120,0);minar(-120,0);hawa(120,-120);
 
 // Kashmir lake
-const lake=new THREE.Mesh(
- new THREE.CircleGeometry(32,48),
- mat(0x399fc5)
-);
-lake.rotation.x=-Math.PI/2;
-lake.position.set(-190,.12,-150);
-scene.add(lake);
-for(let i=0;i<9;i++){
- mountain(-230+i*11,-190,10,25+i%3*10,0x718b9b);
+mesh(new THREE.CircleGeometry(35,48),material(0x299fc9),-230,.08,-180).rotation.x=-Math.PI/2;
+for(let i=0;i<15;i++){
+ const h=35+Math.random()*45;
+ mesh(new THREE.ConeGeometry(17,h,7),material(0x8297a6),-300+i*10,h/2,-230);
 }
-label('KASHMIR',-190,-150);
 
-// Player
-const player=new THREE.Group();
-scene.add(player);
-
-const skin=mat(0xe6ae83);
-const shirt=mat(0x1477ba);
-const pants=mat(0x202b42);
-const black=mat(0x151515);
-
-function part(geo,material,x,y,z){
- const mesh=new THREE.Mesh(geo,material);
- mesh.position.set(x,y,z);
- mesh.castShadow=true;
- player.add(mesh);
- return mesh;
+// Labels
+function label(txt,x,z){
+ const c=document.createElement('canvas');c.width=512;c.height=128;
+ const ctx=c.getContext('2d');ctx.fillStyle='#09283a';ctx.fillRect(0,0,512,128);
+ ctx.fillStyle='white';ctx.font='bold 42px Arial';ctx.textAlign='center';ctx.fillText(txt,256,80);
+ const tex=new THREE.CanvasTexture(c);
+ const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex}));
+ s.position.set(x,25,z);s.scale.set(28,7,1);scene.add(s);
 }
-part(new THREE.CapsuleGeometry(.55,1.2,5,10),shirt,0,2.1,0);
-part(new THREE.SphereGeometry(.48,16,16),skin,0,3.25,0);
-part(new THREE.CapsuleGeometry(.19,.9,4,8),pants,-.25,.7,0);
-part(new THREE.CapsuleGeometry(.19,.9,4,8),pants,.25,.7,0);
-const arm1=part(new THREE.CapsuleGeometry(.14,.8,4,8),skin,-.7,2,0);
-const arm2=part(new THREE.CapsuleGeometry(.14,.8,4,8),skin,.7,2,0);
-player.position.set(0,0,0);
+label('TAJ MAHAL - AGRA',0,-110);
+label('RED FORT - DELHI',120,0);
+label('QUTUB MINAR',-120,0);
+label('HAWA MAHAL - JAIPUR',120,-120);
+label('DAL LAKE - KASHMIR',-230,-180);
 
-// Camera
-let yaw=0;
-let pitch=.28;
-let distance=8;
-let moveForward=0;
-let moveSide=0;
-let running=false;
-let jumping=false;
-let velocityY=0;
+// Player character
+const player=new THREE.Group();scene.add(player);
+const skin=material(0xe5ad82),shirt=material(0x1679bd),pants=material(0x202b42);
+function bodyPart(geo,mat,x,y,z){
+ return mesh(geo,mat,x,y,z,player);
+}
+bodyPart(new THREE.CapsuleGeometry(.48,.9,5,10),shirt,0,2,0);
+bodyPart(new THREE.SphereGeometry(.43,16,16),skin,0,3.05,0);
+bodyPart(new THREE.CapsuleGeometry(.18,.8,4,8),pants,-.23,.65,0);
+bodyPart(new THREE.CapsuleGeometry(.18,.8,4,8),pants,.23,.65,0);
+const armL=bodyPart(new THREE.CapsuleGeometry(.13,.8,4,8),skin,-.65,2,0);
+const armR=bodyPart(new THREE.CapsuleGeometry(.13,.8,4,8),skin,.65,2,0);
+
+// Vehicles
+function makeCar(color=0xd91d25){
+ const g=new THREE.Group();
+ mesh(new THREE.BoxGeometry(2.5,.8,4.5),material(color),0,.8,0,g);
+ mesh(new THREE.BoxGeometry(1.8,.9,2),material(0x9bc7d7),0,1.55,-.2,g);
+ for(let x of [-1.2,1.2])for(let z of [-1.4,1.4]){
+  const w=mesh(new THREE.CylinderGeometry(.42,.42,.25,16),material(0x111111),x,.45,z,g);
+  w.rotation.z=Math.PI/2;
+ }
+ return g;
+}
+function makeBike(){
+ const g=new THREE.Group();
+ mesh(new THREE.BoxGeometry(.5,.6,1.8),material(0x167ee2),0,1,0,g);
+ for(let z of [-.8,.8]){
+  const w=mesh(new THREE.TorusGeometry(.42,.12,8,18),material(0x111111),0,.5,z,g);
+  w.rotation.y=Math.PI/2;
+ }
+ mesh(new THREE.CylinderGeometry(.12,.12,1.1,8),material(0xaaaaaa),0,1.5,0,g);
+ return g;
+}
+const vehicles=[
+ {name:'Sports Car',type:'car',obj:makeCar(0xd91d25),x:8,z:8},
+ {name:'Premium Car',type:'car',obj:makeCar(0x171717),x:14,z:8},
+ {name:'Bike',type:'bike',obj:makeBike(),x:20,z:8}
+];
+vehicles.forEach(v=>{v.obj.position.set(v.x,0,v.z);scene.add(v.obj)});
+
+let active=false,inVehicle=null,yaw=0,forward=0,side=0,running=false;
+let velocityY=0,jumping=false,coins=100;
 const clock=new THREE.Clock();
 
-camera.position.set(0,5,9);
-
+function notify(t){
+ const n=document.getElementById('notice');n.textContent=t;n.style.display='block';
+ clearTimeout(window.nt);window.nt=setTimeout(()=>n.style.display='none',2400);
+}
 function updateCamera(dt){
- const target=new THREE.Vector3(
-  player.position.x,
-  player.position.y+2,
-  player.position.z
- );
- const offset=new THREE.Vector3(
-  Math.sin(yaw)*distance,
-  3+pitch*5,
-  Math.cos(yaw)*distance
- );
- const desired=target.clone().add(offset);
- camera.position.lerp(desired,Math.min(1,dt*5));
- camera.lookAt(target);
+ const target=new THREE.Vector3(player.position.x,player.position.y+2,player.position.z);
+ const dist=inVehicle?11:8;
+ const desired=target.clone().add(new THREE.Vector3(Math.sin(yaw)*dist,4,Math.cos(yaw)*dist));
+ camera.position.lerp(desired,Math.min(1,dt*5));camera.lookAt(target);
+}
+function update(dt){
+ let f=forward,s=side;
+ if(keys.w||keys.arrowup)f=1;
+ if(keys.s||keys.arrowdown)f=-1;
+ if(keys.a||keys.arrowleft)s=-1;
+ if(keys.d||keys.arrowright)s=1;
+ const speed=inVehicle?(inVehicle.type==='bike'?23:19):(running?13:7);
+ const dir=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw));
+ const right=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw));
+ const move=dir.multiplyScalar(f).add(right.multiplyScalar(s));
+ if(move.length()>0){
+  move.normalize();
+  player.position.addScaledVector(move,speed*dt);
+  player.rotation.y=Math.atan2(move.x,move.z);
+  if(inVehicle)inVehicle.obj.position.copy(player.position);
+ }
+ if(!inVehicle){
+  velocityY-=24*dt;player.position.y+=velocityY*dt;
+  if(player.position.y<0){player.position.y=0;velocityY=0;jumping=false;}
+ }
+ player.position.x=THREE.MathUtils.clamp(player.position.x,-450,450);
+ player.position.z=THREE.MathUtils.clamp(player.position.z,-450,450);
 }
 
-// Keyboard
 const keys={};
-window.addEventListener('keydown',e=>{
- keys[e.key.toLowerCase()]=true;
-});
-window.addEventListener('keyup',e=>{
- keys[e.key.toLowerCase()]=false;
-});
+window.addEventListener('keydown',e=>keys[e.key.toLowerCase()]=true);
+window.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
 
-// Touch controls
 function hold(id,fn){
- const b=document.getElementById(id);
- b.addEventListener('pointerdown',e=>{
-  e.preventDefault();fn(true);
- });
- ['pointerup','pointercancel','pointerleave'].forEach(ev=>
- b.addEventListener(ev,()=>fn(false)));
+ const el=document.getElementById(id);
+ el.addEventListener('pointerdown',e=>{e.preventDefault();fn(true)});
+ ['pointerup','pointercancel','pointerleave'].forEach(ev=>el.addEventListener(ev,()=>fn(false)));
 }
-hold('up',v=>moveForward=v?1:0);
-hold('down',v=>moveForward=v?-1:0);
-hold('left',v=>moveSide=v?-1:0);
-hold('right',v=>moveSide=v?1:0);
+hold('up',v=>forward=v?1:0);hold('down',v=>forward=v?-1:0);
+hold('left',v=>side=v?-1:0);hold('right',v=>side=v?1:0);
 hold('run',v=>running=v);
-
 document.getElementById('jump').onclick=()=>{
- if(!jumping){velocityY=9;jumping=true;}
+ if(!inVehicle&&!jumping){velocityY=9;jumping=true;}
 };
 
-// Drag camera
+// Drag screen to rotate camera
 let dragging=false,lastX=0;
-renderer.domElement.addEventListener('pointerdown',e=>{
- dragging=true;lastX=e.clientX;
-});
+renderer.domElement.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX});
 window.addEventListener('pointerup',()=>dragging=false);
 window.addEventListener('pointermove',e=>{
- if(!dragging)return;
- yaw-=(e.clientX-lastX)*.006;
- lastX=e.clientX;
+ if(dragging){yaw-=(e.clientX-lastX)*.006;lastX=e.clientX;}
 });
 
-// Movement
-function updatePlayer(dt){
- let forward=moveForward;
- let side=moveSide;
-
- if(keys['w']||keys['arrowup'])forward=1;
- if(keys['s']||keys['arrowdown'])forward=-1;
- if(keys['a']||keys['arrowleft'])side=-1;
- if(keys['d']||keys['arrowright'])side=1;
-
- const speed=running?16:8;
- const direction=new THREE.Vector3(
-  -Math.sin(yaw),0,-Math.cos(yaw)
- );
- const right=new THREE.Vector3(
-  Math.cos(yaw),0,-Math.sin(yaw)
- );
- const movement=direction.multiplyScalar(forward)
- .add(right.multiplyScalar(side));
-
- if(movement.length()>0){
-  movement.normalize();
-  player.position.addScaledVector(movement,speed*dt);
-  player.rotation.y=Math.atan2(movement.x,movement.z);
-  arm1.rotation.x=Math.sin(clock.elapsedTime*12)*.6;
-  arm2.rotation.x=-Math.sin(clock.elapsedTime*12)*.6;
+// Enter / exit nearest vehicle
+document.getElementById('enterVehicle').onclick=()=>{
+ if(inVehicle){
+  inVehicle.obj.position.set(player.position.x+3,0,player.position.z);
+  inVehicle=null;notify('Exited vehicle');updateStats();return;
  }
-
- velocityY-=24*dt;
- player.position.y+=velocityY*dt;
- if(player.position.y<=0){
-  player.position.y=0;
-  velocityY=0;jumping=false;
- }
-
- player.position.x=THREE.MathUtils.clamp(player.position.x,-350,350);
- player.position.z=THREE.MathUtils.clamp(player.position.z,-350,350);
+ let nearest=null,dist=8;
+ vehicles.forEach(v=>{
+  const d=player.position.distanceTo(v.obj.position);
+  if(d<dist){dist=d;nearest=v;}
+ });
+ if(nearest){
+  inVehicle=nearest;player.position.copy(nearest.obj.position);
+  notify('Driving '+nearest.name);updateStats();
+ }else notify('Go near a car or bike first!');
+};
+function updateStats(){
+ document.getElementById('stats').textContent='Explorer • '+(inVehicle?inVehicle.name:'On Foot');
 }
 
 // Destinations
-const locations={
- kashmir:{x:-190,z:-150,name:'KASHMIR'},
- delhi:{x:100,z:0,name:'DELHI'},
- agra:{x:0,z:-95,name:'AGRA'},
- jaipur:{x:100,z:-100,name:'JAIPUR'},
- village:{x:0,z:0,name:'INDIAN VILLAGE'}
+const places={
+ delhi:[120,0,'Delhi'],agra:[0,-110,'Agra'],
+ jaipur:[120,-120,'Jaipur'],kashmir:[-230,-180,'Kashmir'],
+ mumbai:[-200,180,'Mumbai'],village:[0,0,'Village']
+};
+window.travel=function(p){
+ const a=places[p];if(!a)return;
+ if(inVehicle){inVehicle.obj.position.set(player.position.x+5,0,player.position.z);inVehicle=null;}
+ player.position.set(a[0],0,a[1]);notify('Welcome to '+a[2]+'!');updateStats();
 };
 
-window.travel=function(place){
- const p=locations[place];
- if(!p)return;
- player.position.set(p.x,0,p.z);
- yaw=0;
- notify('Welcome to '+p.name+'!');
+// Store & UPI
+window.openStore=()=>document.getElementById('store').style.display='block';
+window.closeStore=()=>document.getElementById('store').style.display='none';
+window.copyUPI=()=>{
+ navigator.clipboard?.writeText('pookie-aksh@fam');
+ notify('UPI ID copied');
+};
+window.buy=function(item,price){
+ const upi='upi://pay?pa=pookie-aksh@fam&pn=YOUR%20INDIA%20LIVE&am='+price+'&cu=INR&tn='+encodeURIComponent(item);
+ notify('Opening UPI app. Pay ₹'+price+' for '+item);
+ window.location.href=upi;
 };
 
-function notify(t){
- const el=document.getElementById('message');
- el.innerText=t;el.style.display='block';
- clearTimeout(window.toastTimer);
- window.toastTimer=setTimeout(()=>el.style.display='none',2500);
-}
-
-// Start
-let active=false;
-window.startGame=function(){
- active=true;
- document.getElementById('start').style.display='none';
- player.position.set(0,0,0);
+// Start game
+document.getElementById('play').onclick=()=>{
+ active=true;document.getElementById('start').style.display='none';
  notify('Welcome to YOUR INDIA LIVE!');
 };
 
 function animate(){
  requestAnimationFrame(animate);
  const dt=Math.min(clock.getDelta(),.04);
- if(active){
-  updatePlayer(dt);
-  updateCamera(dt);
- }
+ if(active){update(dt);updateCamera(dt);}
  renderer.render(scene,camera);
 }
 animate();
 
 window.addEventListener('resize',()=>{
  camera.aspect=innerWidth/innerHeight;
- camera.updateProjectionMatrix();
- renderer.setSize(innerWidth,innerHeight);
+ camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);
 });
-
-document.getElementById('loading').innerText='3D World Ready!';
+document.getElementById('loading').textContent='3D World Ready!';
 document.getElementById('play').disabled=false;
-document.getElementById('play').style.opacity='1';
 </script>
 </body>
 </html>
